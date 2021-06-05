@@ -15,23 +15,6 @@
             </tr>
         </tbody>
         </table>
-        <div class="pagination my-4">
-            <span class="step-links">
-            {% if objects_list.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ objects_list.previous_page_number }}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ objects_list.number }} of {{ objects_list.paginator.num_pages }}.
-            </span>
-
-            {% if objects_list.has_next %}
-                <a href="?page={{ objects_list.next_page_number }}">next</a>
-                <a href="?page={{ objects_list.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-        </span>
-        </div>
         <nav aria-label="...">
   <ul class="pagination">
       {% if objects_list.has_previous %}
@@ -39,28 +22,77 @@
       <a class="page-link" href="?page=1">First</a>
     </li>
     <li class="page-item">
-        <span class="page-link"><a href="?page={{ objects_list.previous_page_number }}"> &laquo; </a></span>
+        <a class="page-link" href="?page={{ objects_list.previous_page_number }}"> &laquo; </a>
+    </li>
+        {% elif not objects_list.has_previous  %}
+      <li class="page-item disabled">
+      <a class="page-link" href="?page=1">First</a>
+    </li>
+    <li class="page-item disabled">
+        <a class="page-link" href="?page=1"> &laquo; </a>
     </li>
       {% endif %}
-    {% if objects_list.has_previous %}
-    <li class="page-item"><a class="page-link" href="?page={{  objects_list.previous_page_number }}">{{  objects_list.previous_page_number }}</a></li>
-{#    {% elif objects_list.has_previous == False %}#}
-{#        <li class="page-item"><a class="page-link" href="">{{  objects_list.number }}</a></li>#}
-    {% endif %}
-      <li class="page-item active" aria-current="page">
-      <span class="page-link"><a class="page-link " href="?page={{  objects_list.number }}">{{  objects_list.number }}</a></span>
-    </li>
-  {% if objects_list.has_next %}
-    <li class="page-item"><a class="page-link" href="?page={{ objects_list.next_page_number }}">{{ objects_list.next_page_number }}</a></li>
-  {% endif %}
-  {% if objects_list.has_next %}
+
+
+    {% if objects_list.has_previous and objects_list.has_next %}
     <li class="page-item">
+        <a class="page-link" href="?page={{  objects_list.previous_page_number }}">{{  objects_list.previous_page_number }}</a>
+    </li>
+    {% elif not objects_list.has_previous %}
+        <li class="page-item active">
+            <a class="page-link" href="?page={{  objects_list.number }}">{{  objects_list.number }}</a>
+        </li>
+    {% elif not objects_list.has_next %}
+        <li class="page-item ">
+            <a class="page-link" href="?page={{  objects_list.previous_page_number|add:-1 }}">{{  objects_list.previous_page_number|add:-1 }}</a>
+        </li>
+    {% endif %}
+
+    {% if objects_list.has_previous and objects_list.has_next %}
+      <li class="page-item active " aria-current="page">
+      <a class="page-link " href="?page={{  objects_list.number }}">{{  objects_list.number }}</a>
+    </li>
+    {% elif not objects_list.has_previous %}
+      <li class="page-item " aria-current="page">
+      <a class="page-link " href="?page={{  objects_list.next_page_number }}">{{  objects_list.next_page_number }}</a>
+    </li>
+    {% elif not objects_list.has_next and objects_list.has_previous%}
+        <li class="page-item">
+            <a class="page-link" href="?page={{  objects_list.previous_page_number }}">{{  objects_list.previous_page_number }}</a>
+        </li>
+    {% endif %}
+
+
+  {% if not objects_list.has_previous %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ objects_list.next_page_number|add:1 }}">{{ objects_list.next_page_number|add:1 }}</a>
+    </li>
+  {% elif objects_list.has_next and objects_list.has_previous %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ objects_list.next_page_number }}">{{ objects_list.next_page_number }}</a>
+    </li>
+  {% elif not objects_list.has_next %}
+      <li class="page-item active">
+          <a class="page-link" href="?page={{  objects_list.number }}">{{  objects_list.number }}</a>
+      </li>
+  {% endif %}
+
+     {% if objects_list.has_next %}
+      <li class="page-item">
       <a class="page-link" href="?page={{ objects_list.next_page_number }}">&raquo;</a>
     </li>
       <li class="page-item">
       <a class="page-link" href="?page={{ objects_list.paginator.num_pages }}">Last</a>
     </li>
-  {% endif %}
+        {% elif not objects_list.has_next  %}
+      <li class="page-item disabled">
+      <a class="page-link" href="#">&raquo;</a>
+    </li>
+      <li class="page-item disabled">
+      <a class="page-link" href="#">Last</a>
+    </li>
+
+      {% endif %}
   </ul>
 </nav>
         </div>
