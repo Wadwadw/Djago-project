@@ -15,7 +15,7 @@ def home(request):
     # form = CityForm()
     # city = request.POST.get('name')
     cities = City.objects.all()
-    paginator = Paginator(cities, 2)
+    paginator = Paginator(cities, 15)
     page = request.GET.get('page')
     cities = paginator.get_page(page)
     return render(request, 'cities/home.html', {'objects_list': cities,})
