@@ -30,12 +30,12 @@
         <tbody>
             {% for object in objects_list %}
                 <tr>
-                <td><a href=""><button type="button" class="btn btn-primary btn-sm">{{ object.name }}</button></a></td>
+                <td><a href="{% url 'train:detail' pk=object.pk %}"><button type="button" class="btn btn-primary btn-sm">{{ object.name }}</button></a></td>
                 <td>{{ object.from_city }}</td>
                 <td>{{ object.to_city }}</td>
                 <td>{{ object.travel_time }}</td>
-                <td><a href=""><button type="button" class="btn btn-primary btn-sm">Редактировать</button></a> </td>
-                <td><a href=""><button type="button" class="btn btn-danger btn-sm">Удалить</button></a> </td>
+                <td><a href="{% url 'train:update' pk=object.pk %}"><button type="button" class="btn btn-primary btn-sm">Редактировать</button></a> </td>
+                <td><a href="{% url 'train:delete' pk=object.pk %}"><button type="button" class="btn btn-danger btn-sm">Удалить</button></a> </td>
             {% endfor %}
             </tr>
         </tbody>
@@ -128,7 +128,7 @@
     </div>
     <div>
     <div class="row">
-        <a href=""><button type="button" class="btn btn-success">Добавить новый Город</button></a>
+        <a href="{% url 'train:add' %}"><button type="button" class="btn btn-success">Добавить новый поезд</button></a>
     </div>
     </div>
 
