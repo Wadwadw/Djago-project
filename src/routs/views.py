@@ -39,7 +39,7 @@ def find_routs(request):
             from_city = data['from_city']
             to_city = data['to_city']
             across_cities_form = data['across_cities']
-            # traveling_time = data['traveling_time']
+            traveling_time = data['travel_time']
             graph = get_graph()
             all_ways = list(dfs_paths(graph, from_city.id, to_city.id))
             if len(all_ways) == 0:
@@ -56,10 +56,49 @@ def find_routs(request):
                     return render(request, 'routs/home.html', {'form': form})
             else:
                 right_ways = all_ways
+
+            trains = []
+            for route in right_ways:
+                tmp = {}
+                tmp['trains'] = []
+                total_time = 0
+                for index in range(len(route)-1):
+                    qs = Train.objects.filter(from_city=route[index], to_city=route[index+1])
+                    qs = qs.order_by('travel_time').first()
+                    total_time += qs.travel_time
+                    tmp['trains'].append(qs)
+                tmp['total_time'] = total_time
+                if total_time <= int(traveling_time):
+                    trains.append(tmp)
+            if not trains:
+                messages.error(request, 'Время в пути больше заданного')
+                return render(request, 'routs/home.html', {'form': form})
+
+            routes = []
+            cities = {'from_city': from_city.name, 'to_city': to_city.name}
+            for tr in trains :
+                routes.append({'route': tr['trains'],
+                               'total_time': tr['total_time'],
+                               'from_city': from_city.name,
+                               'to_city': to_city.name,
+                               })
+            sorted_routes = []
+            if len(routes) == 1:
+                sorted_routes = routes
+            else:
+                times = list(set(x['total_time'] for x in routes))
+                times = sorted(times)
+                for time in times:
+                    for route in routes:
+                        if time == route['total_time']:
+                            sorted_routes.append(route)
+
             context = {}
             form = RouteForm()
             context['form'] = form
-            context['ways'] = right_ways
+            context['ways'] = trains
+            context['routes'] = sorted_routes
+            context['cities'] = cities
             return render(request, 'routs/home.html', context)
         return render(request, 'routs/home.html', {'form': form})
     else:

@@ -2,8 +2,46 @@
 {% block title %} Поиск маршрута {% endblock %}
 {% block content %}
 <h1 class="display-4">Поиск маршрута</h1>
+    {% if routes %}
+        <div class="container-fluid" >
+
+        <h3>
+            {% if routes|length == 1 %}
+                Маршрут
+            {% else %}
+                Маршруты
+            {% endif %}
+             из {{ cities.from_city }} в {{ cities.to_city }}</h3>
+        <hr>
+        {% for route in routes %}
+            {% if forloop.first %}
+                <h5>Самый короткий маршрут</h5>
+            {% endif %}
+            <table>
+            <thead>
+            <tr>
+                <th>
+                    Список поездов
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for train in route.route %}
+                <tr>
+                <td>
+                    Поезд №{{ train.name }}  , следующий из {{ train.from_city }} , в {{ train.to_city }} . Время в пути {{ train.travel_time }}
+                </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+            <p>
+            Общее время в пути {{ route.total_time }}
+            </p>
+        {% endfor %}
+        </div>
+    {% endif %}
     <div class="container-fluid" >
-        {{ ways }}
         <form id="select2" action="{% url 'find_routs' %}" method="post"> {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Найти">
