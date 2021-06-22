@@ -3,8 +3,8 @@
 {% block content %}
 <h1 class="display-4">Поиск маршрута</h1>
     <div class="container-fluid" >
-
-        <form id="select2" action="" method="post"> {% csrf_token %}
+        {{ ways }}
+        <form id="select2" action="{% url 'find_routs' %}" method="post"> {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Найти">
         </form>
