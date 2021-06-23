@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from .forms import *
 from django.contrib import messages
 from trains.models import Train
+from django.views.generic import DetailView
+from django.views.generic.list import ListView
+from django.views.generic.edit import DeleteView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
 
 
 def dfs_paths(graph, start, goal):
@@ -160,3 +165,23 @@ def add_route(request):
         else:
             messages.error(request, 'Невозможно сохранить несуществующий маршрут')
             return redirect('/')
+
+class RouteDetailView(DetailView):
+    queryset = Route.objects.all()
+    context_object_name = 'object'
+    template_name = 'routs/detail.html'
+
+class RouteListlView(ListView):
+    queryset = Route.objects.all()
+    context_object_name = 'objects_list'
+    template_name = 'routs/list.html'
+
+class RouteDeleteView(SuccessMessageMixin, DeleteView):
+    model = Route
+    # template_name = 'routes/list.html'
+    success_url = reverse_lazy('home')
+    success_message = 'Маршрут успешно удалён'
+
+    def get(self, request, *args, **kwargs):
+        messages.success(request, 'Маршрут успешно удалён')
+        return self.post(request, *args, **kwargs)
