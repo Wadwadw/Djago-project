@@ -1,1 +1,2 @@
 web: gunicorn trawel.wsgi --log-file -
+heroku create myapp --buildpack heroku/python
