@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from routs.views import home, find_routs, add_route, RouteListlView, RouteDetailView, RouteDeleteView
+from .views import login_view, logout_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,6 +25,8 @@ urlpatterns = [
     path('find/', find_routs, name='find_routs'),
     path('add_route/', add_route, name='add_route'),
     path('list/', RouteListlView.as_view(), name='list'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
     path('detail/<int:pk>/', RouteDetailView.as_view(), name='detail'),
     path('delete/<int:pk>/', RouteDeleteView.as_view(), name='delete'),
     path('', home, name='home'),

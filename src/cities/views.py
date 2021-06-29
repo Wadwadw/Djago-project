@@ -6,6 +6,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import CityForm
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 def home(request):
     # if request.method == 'POST':
@@ -26,14 +28,16 @@ class CityDetailView(DetailView):
     context_object_name = 'object'
     template_name = 'cities/detail.html'
 
-class CityCreateView(SuccessMessageMixin, CreateView):
+class CityCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
+    login_url = '/login/'
     model = City
     form_class = CityForm
     template_name = 'cities/create.html'
     success_url = reverse_lazy('city:home')
     success_message = 'Город успешно создан'
 
-class CityUpdateView(SuccessMessageMixin, UpdateView):
+class CityUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
     model = City
     form_class = CityForm
     template_name = 'cities/update.html'
@@ -41,12 +45,12 @@ class CityUpdateView(SuccessMessageMixin, UpdateView):
     success_message = 'Город успешно изменён'
 
 
-class CityDeleteView(SuccessMessageMixin, DeleteView):
+class CityDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = City
     # template_name = 'cities/delete.html'
     success_url = reverse_lazy('city:home')
     success_message = 'Город успешно удалён'
-
+    login_url = '/login/'
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
 

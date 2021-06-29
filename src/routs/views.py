@@ -7,7 +7,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def dfs_paths(graph, start, goal):
     stack = [(start, [start])]
@@ -30,10 +31,11 @@ def get_graph():
     return graph
 
 
-
+# @login_required(login_url='/login/')
 def home(request):
     form = RouteForm()
     return render(request, 'routs/home.html', {'form': form})
+
 
 def find_routs(request):
     if request.method == 'POST':
@@ -176,12 +178,12 @@ class RouteListlView(ListView):
     context_object_name = 'objects_list'
     template_name = 'routs/list.html'
 
-class RouteDeleteView(SuccessMessageMixin, DeleteView):
+class RouteDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Route
     # template_name = 'routes/list.html'
     success_url = reverse_lazy('home')
     success_message = 'Маршрут успешно удалён'
-
+    login_url = '/login/'
     def get(self, request, *args, **kwargs):
         messages.success(request, 'Маршрут успешно удалён')
         return self.post(request, *args, **kwargs)

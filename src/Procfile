@@ -1,0 +1,1 @@
+web: gunicorn trawel.wsgi --log-file -
