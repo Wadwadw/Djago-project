@@ -1,3 +1,2 @@
 web: gunicorn trawel.wsgi --log-file -
 heroku create myapp --buildpack heroku/python
-heroku config:set DISABLE_COLLECTSTATIC=1
