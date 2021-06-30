@@ -3,65 +3,65 @@
     "model": "cities.city",
     "pk": 1,
     "fields": {
-        "name": "Львов"
+        "name": "Р›СЊРІРѕРІ"
     }
 },
 {
     "model": "cities.city",
     "pk": 4,
     "fields": {
-        "name": "Одесса"
+        "name": "РћРґРµСЃСЃР°"
     }
 },
 {
     "model": "cities.city",
     "pk": 7,
     "fields": {
-        "name": "Киев"
+        "name": "РљРёРµРІ"
     }
 },
 {
     "model": "cities.city",
     "pk": 9,
     "fields": {
-        "name": "Павлоград"
+        "name": "РџР°РІР»РѕРіСЂР°Рґ"
     }
 },
 {
     "model": "cities.city",
     "pk": 10,
     "fields": {
-        "name": "Тернополь"
+        "name": "РўРµСЂРЅРѕРїРѕР»СЊ"
     }
 },
 {
     "model": "cities.city",
     "pk": 11,
     "fields": {
-        "name": "Харьков"
+        "name": "РҐР°СЂСЊРєРѕРІ"
     }
 },
 {
     "model": "cities.city",
     "pk": 13,
     "fields": {
-        "name": "Запорожье"
+        "name": "Р—Р°РїРѕСЂРѕР¶СЊРµ"
     }
 },
 {
     "model": "cities.city",
     "pk": 14,
     "fields": {
-        "name": "Мариуполь"
+        "name": "РњР°СЂРёСѓРїРѕР»СЊ"
     }
 },
 {
     "model": "routs.route",
     "pk": 2,
     "fields": {
-        "name": "ывф",
-        "from_city": "Киев",
-        "to_city": "Львов",
+        "name": "С‹РІС„",
+        "from_city": "РљРёРµРІ",
+        "to_city": "Р›СЊРІРѕРІ",
         "travel_times": 21,
         "across_cities": [
             10,
@@ -75,8 +75,8 @@
     "pk": 3,
     "fields": {
         "name": "23123",
-        "from_city": "Киев",
-        "to_city": "Львов",
+        "from_city": "РљРёРµРІ",
+        "to_city": "Р›СЊРІРѕРІ",
         "travel_times": 302,
         "across_cities": [
             10,
