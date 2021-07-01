@@ -64,10 +64,17 @@
         </li>
       <li class="nav-item">
          {% if user.is_authenticated %}
+             <li>
              <a class="nav-link {% if request.path == train_home_url %} active {% endif %}" href="{% url 'logout' %}">Выйти из системы</a>
-          {% else %}
+            </li>
+         {% else %}
+             <li>
              <a class="nav-link {% if request.path == train_home_url %} active {% endif %}" href="{% url 'login' %}">Войти в систему</a>
-          {% endif %}
+             </li>
+             <li>
+             <a class="nav-link {% if request.path == train_home_url %} active {% endif %}" href="{% url 'register' %}">Зарегистрироваться</a>
+             </li>
+         {% endif %}
 
         </li>
       </ul>
